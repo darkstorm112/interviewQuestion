@@ -31,32 +31,32 @@
     console.log(a(1)); // 1+4+3+2+1=11
 
     // 我的实现
-    function compose(...fn) {
-      if(!fn.length)throw '请传入初始化函数'
-      return function (num) {
-        fn.forEach(item=>{
-          num = item(num)
-        })
-        return num
-      }
-    }
+    // function compose(...fn) {
+    //   if(!fn.length)throw '请传入初始化函数'
+    //   return function (num) {
+    //     fn.forEach(item=>{
+    //       num = item(num)
+    //     })
+    //     return num
+    //   }
+    // }
 
     // 作者的实现 -- 加几个return方便看
-    function compose(...fn) {
-      if (!fn.length) return (v) => v;
-      if (fn.length === 1) return fn[0];
-      return fn.reduce(
-        (pre, cur) =>{
-          // console.log(pre, cur)
-          return (...args) => {
-            // console.log(pre, cur)
-            console.log(args)
+    // function compose(...fn) {
+    //   if (!fn.length) return (v) => v;
+    //   if (fn.length === 1) return fn[0];
+    //   return fn.reduce(
+    //     (pre, cur) =>{
+    //       // console.log(pre, cur)
+    //       return (...args) => {
+    //         // console.log(pre, cur)
+    //         console.log(args)
 
-            return pre(cur(...args))
-          }
-        }
-      );
-    }
+    //         return pre(cur(...args))
+    //       }
+    //     }
+    //   );
+    // }
 
     // function compose(...fn) {
     //   if (!fn.length) return (v) => v;
@@ -80,7 +80,17 @@
     //     解析：	最终返回的是fn123-4函数；args=[1]；先执行fn4函数，然后将fn4返回的值作为fn123函数的入参																		
 																			
 																			
-																			
+		function compose (...fn) {
+      if(!fn.length)throw '请传入初始化函数'
+      // return function (num) {
+      //   return fn.reduce(
+      //     (acc,fn)=>fn(acc),
+      //     num
+      //   )
+      // }
+      return num => fn.reduce((acc,f)=>f(acc),num)
+    }
+													
 																			
 																			
 

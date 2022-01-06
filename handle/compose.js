@@ -17,7 +17,7 @@ const a = compose(fn1, fn2, fn3, fn4);
 console.dir(a)
 console.log(a(1)); // 1+4+3+2+1=11
 
-// 我的实现
+// 我的实现 --1
 function compose(...fn) {
   if(!fn.length)throw '请传入初始化函数'
   return function (num) {
@@ -26,6 +26,19 @@ function compose(...fn) {
     })
     return num
   }
+}
+
+// 实现2--通过reduce实现
+function compose (...fn) {
+  if(!fn.length)throw '请传入初始化函数'
+  return function (num) {
+    return fn.reduce(
+      (acc,fn)=>fn(acc),
+      num
+    )
+  }
+  // 极致简洁写法
+  return num => fn.reduce((acc,f)=>f(acc),num)
 }
 
 // 作者的实现
@@ -53,21 +66,5 @@ function compose(...fn) {
     
 
 
-// 插一个mdn上面看到的比较有意思的 栗子
-var maxCallback = ( acc, cur ) => Math.max( acc.x, cur.x );
-var maxCallback2 = ( max, cur ) => Math.max( max, cur );
 
-// reduce() 没有初始值
-[ { x: 2 }, { x: 22 }, { x: 42 } ].reduce( maxCallback ); // NaN
-[ { x: 2 }, { x: 22 }            ].reduce( maxCallback ); // 22
-[ { x: 2 }                       ].reduce( maxCallback ); // { x: 2 }
-[                                ].reduce( maxCallback ); // TypeError
-
-// map/reduce; 这是更好的方案，即使传入空数组或更大数组也可正常执行  mdn给的方案
-[ { x: 22 }, { x: 42 } ].map( el => el.x )
-                        .reduce( maxCallback2, -Infinity );
-
-
-// 改进
-var maxCallback = ( acc, cur ) => Math.max( acc.x||acc, cur.x );  //自己改进的  比较有意思
 
