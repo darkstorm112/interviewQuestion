@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function fn1(x) {
+      console.log('fn1')
+      return x + 1;
+    }
+    function fn2(x) {
+      console.log('fn2')
+      return x + 2;
+    }
+    function fn3(x) {
+      console.log('fn3')
+      return x + 3;
+    }
+    function fn4(x) {
+      console.log('fn4')
+      return x + 4;
+    }
+    const a = compose(fn1, fn2, fn3, fn4);
+    // console.dir(a)
+    // console.log(a)
+
+    console.log(a(1)); // 1+4+3+2+1=11
+
+    // 我的实现
+    function compose(...fn) {
+      if(!fn.length)throw '请传入初始化函数'
+      return function (num) {
+        fn.forEach(item=>{
+          num = item(num)
+        })
+        return num
+      }
+    }
+
+    // 作者的实现 -- 加几个return方便看
+    function compose(...fn) {
+      if (!fn.length) return (v) => v;
+      if (fn.length === 1) return fn[0];
+      return fn.reduce(
+        (pre, cur) =>{
+          // console.log(pre, cur)
+          return (...args) => {
+            // console.log(pre, cur)
+            console.log(args)
+
+            return pre(cur(...args))
+          }
+        }
+      );
+    }
+
+    // function compose(...fn) {
+    //   if (!fn.length) return (v) => v;
+    //   if (fn.length === 1) return fn[0];
+    //   return fn.reduce(
+    //     (pre, cur) =>
+    //       (...args) =>
+    //         pre(cur(...args))
+    //   );
+    // }
+
+    // 解析reduce方法
+    // fn1	fn2	fn3	fn4
+				
+    //     第一次		fn1-2		
+                
+    //     第二次			fn12-3	
+                
+    //     第三次				fn123-4
+    
+    //     解析：	最终返回的是fn123-4函数；args=[1]；先执行fn4函数，然后将fn4返回的值作为fn123函数的入参																		
+																			
+																			
+																			
+																			
+																			
+
+        
+
+  </script>
+</body>
+</html>
