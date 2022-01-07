@@ -49,6 +49,8 @@ function compose(...fn) {
     (pre, cur) =>
       (...args) =>
         pre(cur(...args))
+
+        // cur(pre(...args))  // TODO 这种写法也是可以的  区别 函数逆序调用（pre(cur())） =》函数顺序调用(cur(pre()))
   );
 }
 
