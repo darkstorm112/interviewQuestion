@@ -8,90 +8,48 @@
 </head>
 <body>
   <script>
-    function fn1(x) {
-      console.log('fn1')
-      return x + 1;
-    }
-    function fn2(x) {
-      console.log('fn2')
-      return x + 2;
-    }
-    function fn3(x) {
-      console.log('fn3')
-      return x + 3;
-    }
-    function fn4(x) {
-      console.log('fn4')
-      return x + 4;
-    }
-    const a = compose(fn1, fn2, fn3, fn4);
-    // console.dir(a)
-    // console.log(a)
+    // 定时器测试
+    // let timer = setTimeout(console.log,2000,'测试')
+    // console.log(timer)
 
-    console.log(a(1)); // 1+4+3+2+1=11
-
-    // 我的实现
-    // function compose(...fn) {
-    //   if(!fn.length)throw '请传入初始化函数'
-    //   return function (num) {
-    //     fn.forEach(item=>{
-    //       num = item(num)
-    //     })
-    //     return num
-    //   }
-    // }
-
-    // 作者的实现 -- 加几个return方便看
-    function compose(...fn) {
-      if (!fn.length) return (v) => v;
-      if (fn.length === 1) return fn[0];
-      return fn.reduce(
-        (pre, cur) =>{
-          // console.log(pre, cur)
-          return (...args) => {
-            // console.log(pre, cur)
-            console.log(args)
-
-            return cur(pre(...args))
-          }
+    function myTimeout (cb, time=0) {
+      let timer = null
+      function interval () {
+        timer = setTimeout(()=>{
+          cb()
+          interval()
+        }, time);
+      }
+      interval()
+      return {
+        timer,  // 这样返回已经固定了
+        timeId:function(){return timer},
+        clear: ()=>{
+          clearTimeout(timer)
         }
-      );
+      }
     }
+  function clearTime (timer) {
+    console.log('hhhhhhhhhhhhhhhhhhhhhhh')
+    clearTimeout(timer.timer)
+    // timer.clear()
+    // clearTimeout(timer.timer)
+  }
 
-    // function compose(...fn) {
-    //   if (!fn.length) return (v) => v;
-    //   if (fn.length === 1) return fn[0];
-    //   return fn.reduce(
-    //     (pre, cur) =>
-    //       (...args) =>
-    //         pre(cur(...args))
-    //   );
-    // }
+  let a = myTimeout(()=>{
+    console.log(111)
+    console.log(a.timeId(),'---------')
+  },1000)
 
-    // 解析reduce方法
-    // fn1	fn2	fn3	fn4
-				
-    //     第一次		fn1-2		
-                
-    //     第二次			fn12-3	
-                
-    //     第三次				fn123-4
-    
-    //     解析：	最终返回的是fn123-4函数；args=[1]；先执行fn4函数，然后将fn4返回的值作为fn123函数的入参																		
-																			
-																			
-		// function compose (...fn) {
-    //   if(!fn.length)throw '请传入初始化函数'
-    //   // return function (num) {
-    //   //   return fn.reduce(
-    //   //     (acc,fn)=>fn(acc),
-    //   //     num
-    //   //   )
-    //   // }
-    //   return num => fn.reduce((acc,f)=>f(acc),num)
-    // }
-													
-																			
+  setTimeout(()=>{
+    clearTime(a)
+  },5050)
+
+  // setInterval(()=>{
+  //   console.log(a)
+  // },1100)
+  setTimeout (()=>{
+  },2000)
 																			
 
         
