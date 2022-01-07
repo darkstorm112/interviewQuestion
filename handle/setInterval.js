@@ -90,9 +90,9 @@ function myTimeout (cb, time=0) {
   }
   interval()
   return {
-    timer,  // 这样返回已经固定了 使用函数返回形成闭包=》 栗子：下面两种写法能够拿到最新的定时器
-    timeId:function(){return timer},
-    clear: ()=>{
+    timer,  // 这样返回已经固定了(错误的案例) 使用函数返回形成闭包=》 栗子：下面两种写法能够拿到最新的定时器
+    timeId:function(){return timer},  // 可用
+    clear: ()=>{                      // 可用
       clearTimeout(timer)
     }
   }
@@ -100,16 +100,15 @@ function myTimeout (cb, time=0) {
 function clearTime (timer) {
   clearTimeout(timer.timeId())
   // timer.clear()
-  // clearTimeout(timer.timer)
 }
 
-let a = myTimeout(()=>{
-  console.log('------------',a.timer,a.timeId())
-},1000)
+// let a = myTimeout(()=>{
+//   console.log('------------',a.timer,a.timeId())
+// },1000)
 
-setTimeout(()=>{
-  clearTime(a)
-},5020)
+// setTimeout(()=>{
+//   clearTime(a)
+// },5020)
 
 // setInterval(()=>{
 //   console.log(a)
@@ -117,4 +116,54 @@ setTimeout(()=>{
 // setTimeout (()=>{
 //   console.log(a.timer,'---------')
 // },2000)
+
+
+
+
+// 在知乎上面看到一种构造函数的写法，感觉也是很不错
+// 其实还可以继续封装的，在初始化的时候就可以传入函数 和 时间也是可以的
+function Interval () {
+  this.fn = null
+  this.timeId = null
+}
+
+Interval.prototype.repeat = function(fn,time=0) {
+  if(this.fn===null){
+    this.fn = fn
+  }
+  if(this.fn !== fn)return
+  // clearTimeout(this.timeId)
+  // console.log(this.timeId)
+  this.timeId = setTimeout(() => {
+    fn()
+    this.repeat(fn,time)
+  }, time)
+}
+Interval.prototype.clear = function(){
+  console.log('会执行吗')
+  console.log(this.timeId)
+  clearTimeout(this.timeId)
+}
+
+const a = () => console.log('a')
+
+const b = () => console.log('b')
+
+const good = new Interval()
+
+good.repeat(a, 1000)
+// timer.repeat(b, 1000) // 不会定时执行 b
+
+// 生效
+// setTimeout(()=>{
+//   console.log(good.timeId,'-------------------')
+//   good.clear()
+// },5051)
+
+// 为啥上面的写法可以，下面这种写法不生效？=>函数中this指向undefined/window
+setTimeout(good.clear,5051) // 不生效
+setTimeout(good.clear.bind(good),5051)  // 生效
+
+
+
 
