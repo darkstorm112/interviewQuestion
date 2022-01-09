@@ -1,5 +1,6 @@
 // 都是指针对基础数据
 // 数组去重
+// Set相关用法 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Set
 function noRepeat (arr) {
   return [...new Set(arr)]
 }
