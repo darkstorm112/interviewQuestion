@@ -12,7 +12,7 @@ function noRepeat (arr) {
 }
 
 let arr = [11,2,4,9,'22','sjdh',2,4]
-console.log(noRepeat(arr))
+// console.log(noRepeat(arr))
 
 
 
@@ -70,5 +70,34 @@ function flatter(arr) {
     []
   );
 }
-console.log(flatter([1, 2, [1, [2, 3, [4, 5, [6]]]]]));
+// console.log(flatter([1, 2, [1, [2, 3, [4, 5, [6]]]]]));
+
+// 用迭代的方式实现
+function flat (arr) {
+  let newarr = []
+  let i = null
+  while(arr.length){
+    i = arr.shift()
+    if(Array.isArray(i)){
+      arr = [...i,...arr]
+    }else{
+      newarr.push(i)
+    }
+  }
+  return newarr
+}
+
+// 熟悉下some concat函数
+// concat函数可以接受的参数
+// 数组 == 使用后会去掉最外层[]
+// 基础数据用逗号隔开
+function flatter(arr) {
+  if (!arr.length) return;
+  while (arr.some((item) => Array.isArray(item))) {
+    arr = [].concat(...arr);
+  }
+  return arr;
+}
+console.log(flatter([1, 2, [1, [2, 3, [4, 5, [6]]]]]))
+
 
