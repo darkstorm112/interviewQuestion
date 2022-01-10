@@ -14,6 +14,14 @@ function noRepeat (arr) {
 let arr = [11,2,4,9,'22','sjdh',2,4]
 console.log(noRepeat(arr))
 
+
+
+
+
+
+
+
+
 // 数组扁平化 最简单实用的
 function  flat (arr) {
   return arr.flat(Infinity)
@@ -62,5 +70,5 @@ function flatter(arr) {
     []
   );
 }
-console.log(flat([1, 2, [1, [2, 3, [4, 5, [6]]]]]));
+console.log(flatter([1, 2, [1, [2, 3, [4, 5, [6]]]]]));
 
