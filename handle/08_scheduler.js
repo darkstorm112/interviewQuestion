@@ -52,12 +52,12 @@ function task (fn) {
   }
 }
 
-const addTask = task((...args)=>{console.log(...args)})
+let addTask = task((...args)=>{console.log(...args)})
 
-addTask(1000,"1")
-addTask(500,"2")
-addTask(300,"3")
-addTask(400,"4")
+// addTask(1000,"1")
+// addTask(500,"2")
+// addTask(300,"3")
+// addTask(400,"4")
 
 
 // 构造函数的实现 ==>看看先
@@ -97,12 +97,65 @@ class Scheduler {
   }
 }
 const scheduler = new Scheduler(2);
-const addTask = (time, order) => {
+addTask = (time, order) => {
   scheduler.add(time, order);
 };
+// addTask(1000, "1");
+// addTask(500, "2");
+// addTask(300, "3");
+// addTask(400, "4");
+scheduler.taskStart()
+
+
+
+// 重写下
+;function MyScheduler (limit) {
+  this.limit = limit
+  this.queue = []
+  this.count = 0
+}
+MyScheduler.prototype.add = function (ms,value,fn=()=>{}) {
+  const promiseCreator = ()=>{
+    return new Promise((resolve,reject)=>{
+      // 这里其实可以做些操作
+      // 模拟下吧
+      setTimeout(()=>{
+        resolve(value)
+      },ms)
+    })
+  }
+  this.queue.push(promiseCreator)
+}
+MyScheduler.prototype.taskStart = function () {
+  this.run()
+}
+MyScheduler.prototype.run = function () {
+  if(!this.queue.length)return
+  if(this.count>=this.limit)return
+  this.count++
+  this.queue
+    .shift()()
+    .then(res=>{
+      console.log(res)
+      this.count--
+      this.run()
+    })
+  this.run()
+}
+
+const sch = new MyScheduler(2)
+
+addTask = function (ms, value) {
+  sch.add(ms,value)
+}
+
+
 addTask(1000, "1");
 addTask(500, "2");
 addTask(300, "3");
 addTask(400, "4");
-scheduler.taskStart()
-
+// addTask(1000, "1");
+// addTask(500, "2");
+// addTask(300, "3");
+// addTask(400, "4");
+sch.taskStart()
