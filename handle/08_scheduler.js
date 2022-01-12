@@ -79,6 +79,7 @@ class Scheduler {
     this.queue.push(promiseCreator);
   }
   taskStart() {
+    // 这一步有点YYDS  但是可以优化
     for (let i = 0; i < this.maxCount; i++) {
       this.request();
     }
@@ -127,7 +128,15 @@ MyScheduler.prototype.add = function (ms,value,fn=()=>{}) {
   this.queue.push(promiseCreator)
 }
 MyScheduler.prototype.taskStart = function () {
-  this.run()
+  // 写法二
+  let limit = Math.min(this.limit,this.queue.length)
+  for(let i=0;i<limit;i++){
+    this.run()
+  }
+
+  // 写法一
+  // this.run()
+
 }
 MyScheduler.prototype.run = function () {
   if(!this.queue.length)return
@@ -140,8 +149,12 @@ MyScheduler.prototype.run = function () {
       this.count--
       this.run()
     })
-  this.run()
+  
+  // 写法一
+  // this.run()
 }
+
+// 想想看为啥写法二要比写法一好？  仔细考虑很有意思
 
 const sch = new MyScheduler(2)
 
