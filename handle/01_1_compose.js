@@ -101,4 +101,17 @@ function newCompose (...fns) {
         cur(pre(...args))
   )
 }
+function newCompose (...fns) {
+  return (...args)=>{
+    return fns.reduce(
+      (pre,cur)=>{
+        if(typeof pre === 'function'){
+          return cur(pre(...args))
+        }else{
+          return cur(pre)
+        }
+      },
+    )
+  }
+}
 console.log('---',b(1))
