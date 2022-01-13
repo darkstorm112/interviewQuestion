@@ -14,8 +14,8 @@ function fn4(x) {
   return x + 4;
 }
 const a = compose(fn1, fn2, fn3, fn4);
-console.dir(a)
-console.log(a(1)); // 1+4+3+2+1=11
+// console.dir(a)
+// console.log(a(1)); // 1+4+3+2+1=11
 
 // 我的实现 --1
 function compose(...fn) {
@@ -54,13 +54,51 @@ function compose(...fn) {
   );
 }
 
+
+
+
 // 解析reduce方法
-    // fn1	fn2	fn3	fn4
-				
-    //     第一次		fn1-2		
-                
-    //     第二次			fn12-3	
-                
-    //     第三次				fn123-4
+// fn1	fn2	fn3	fn4
     
-    //     解析：	最终返回的是fn123-4函数；args=[1]；先执行fn4函数，然后将fn4返回的值作为fn123函数的入参				
+//     第一次		fn1-2		
+            
+//     第二次			fn12-3	
+            
+//     第三次				fn123-4
+
+//     解析：	最终返回的是fn123-4函数；args=[1]；先执行fn4函数，然后将fn4返回的值作为fn123函数的入参				
+
+
+
+
+// 复习  返回一个promise实例
+function newCompose (...fns) {
+
+  return (value) =>{
+    return fns.reduce(
+      (pro, cur)=>{
+        // console.log(pro)
+        return pro.then(res=>{
+          // console.log(cur(res))
+          return cur(res)
+        })
+      }
+      ,Promise.resolve(value))
+  }
+}
+
+
+
+const b = newCompose(fn1, fn2, fn3, fn4);
+// console.dir(b)
+// b(1).then(res=>{console.log(res)})
+
+// 这两种写法有啥区别呢
+function newCompose (...fns) {
+  return fns.reduce(
+    (pre,cur)=>
+      (...args)=>
+        cur(pre(...args))
+  )
+}
+console.log('---',b(1))

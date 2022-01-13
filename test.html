@@ -71,9 +71,47 @@
   let arr2 = [...arr1]
 
   console.log(arr1,arr2)
+
+  // let p = Promise.resolve(1)
+  // let p2 = p.then(res=>res)
+  // console.log(p)
+  // console.log(p2)
+
+
+  function fn1(x) {
+    return x + 1;
+  }
+  function fn2(x) {
+    return x + 2;
+  }
+  function fn3(x) {
+    return x + 3;
+  }
+  function fn4(x) {
+    return x + 4;
+  }
+  function newCompose (...fns) {
+
+    return (value) =>{
+      let res = fns.reduce(
+        async (pro, cur)=>{
+          // console.log(pro)
+          return await pro.then(res=>{
+            // console.log(cur(res))
+            return cur(res)
+          })
+        }
+        ,Promise.resolve(value))
+      return res
+    }
+  }
+
+  const b = newCompose(fn1, fn2, fn3, fn4);
+  // console.dir(b)
+  console.log(b(1))
         
 
   </script>
-  <script src="./handle/07_debounce.js"></script>
+  <!-- <script src="./handle/07_debounce.js"></script> -->
 </body>
 </html>
