@@ -62,3 +62,38 @@ function deepClone(obj, hash = new WeakMap()) {
 // var obj2 = deepClone(obj1);
 // console.log(obj1);
 
+
+
+// 深度拷贝
+function deepClone(obj) {
+  const rootObj = {} // 记录新的对象
+  const cache = [obj] // 引用对象数组
+  const cacheNewValues = [rootObj] // 记录对应引用的新值
+
+  const assign = (innerObj) => {
+    const newObj = innerObj === obj ? rootObj : {}
+    Object.keys(innerObj).forEach(key => {
+      const value = innerObj[key]
+      const index = cache.indexOf(value)
+      // 未缓存
+      if (index === -1) {
+        const type = Object.prototype.toString.call(value)
+        if (typeof type === 'object') {
+          newObj[key] = assign(value)
+          // 记录引用的对象以及对应引用的新值
+          cache.push(value)
+          cacheNewValues.push(newObj[key])
+        } else {
+          newObj[key] = value
+        }
+      } else {
+        // 已缓存，取对应缓存的新值
+        newObj[key] = cacheNewValues[index]
+      }
+    })
+
+    return newObj
+  }
+
+  return assign(obj);
+}
