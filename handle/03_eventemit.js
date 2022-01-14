@@ -126,68 +126,68 @@ EventEmitter.prototype.off = function (type,fn) {
 }
 
 // 使用如下
-const event = new EventEmitter();
+// const event = new EventEmitter();
 
-const handle = (...rest) => {
-  console.log(rest);
-};
+// const handle = (...rest) => {
+//   console.log(rest);
+// };
 
-event.on("click", handle);
-event.on("click", ()=>{
-  console.log('222')
-});
-
-
-event.emit("click", 1, 2, 3, 4);
-event.emit("click", 1, 2, 3, 4,5);
+// event.on("click", handle);
+// event.on("click", ()=>{
+//   console.log('222')
+// });
 
 
-event.off("click", handle);
+// event.emit("click", 1, 2, 3, 4);
+// event.emit("click", 1, 2, 3, 4,5);
 
-event.emit("click", 1, 2);
 
-event.once("dbClick", () => {
-  console.log(123456);
-});
-event.emit("dbClick");
-event.emit("dbClick");
+// event.off("click", handle);
+
+// event.emit("click", 1, 2);
+
+// event.once("dbClick", () => {
+//   console.log(123456);
+// });
+// event.emit("dbClick");
+// event.emit("dbClick");
 
 
 
 // class写法
-class EventEmitter {
-  constructor() {
-    this.events = {};
-  }
-  // 实现订阅
-  on(type, callBack) {
-    if (!this.events[type]) {
-      this.events[type] = [callBack];
-    } else {
-      this.events[type].push(callBack);
-    }
-  }
-  // 删除订阅
-  off(type, callBack) {
-    if (!this.events[type]) return;
-    this.events[type] = this.events[type].filter((item) => {
-      return item !== callBack;
-    });
-  }
-  // 只执行一次订阅事件
-  once(type, callBack) {
-    function fn() {
-      callBack();
-      this.off(type, fn);
-    }
-    this.on(type, fn);
-  }
-  // 触发事件
-  emit(type, ...rest) {
-    this.events[type] &&
-      this.events[type].forEach((fn) => fn.apply(this, rest));
-  }
-}
+// class EventEmitter {
+//   constructor() {
+//     this.events = {};
+//   }
+//   // 实现订阅
+//   on(type, callBack) {
+//     if (!this.events[type]) {
+//       this.events[type] = [callBack];
+//     } else {
+//       this.events[type].push(callBack);
+//     }
+//   }
+//   // 删除订阅
+//   off(type, callBack) {
+//     if (!this.events[type]) return;
+//     this.events[type] = this.events[type].filter((item) => {
+//       return item !== callBack;
+//     });
+//   }
+//   // 只执行一次订阅事件
+//   once(type, callBack) {
+//     function fn() {
+//       callBack();
+//       this.off(type, fn);
+//     }
+//     this.on(type, fn);
+//   }
+//   // 触发事件
+//   emit(type, ...rest) {
+//     this.events[type] &&
+//       this.events[type].forEach((fn) => fn.apply(this, rest));
+//   }
+// }
 // 使用如下
 // const event = new EventEmitter();
 
@@ -209,3 +209,56 @@ class EventEmitter {
 // event.emit("dbClick");
 // event.emit("dbClick");
 
+function Obser () {
+  this.event = {}
+}
+// 订阅模式
+Obser.prototype.on = function (key,fn) {
+  if(!this.event[key]){
+    this.event[key] = []
+  }
+  this.event[key].push(fn)
+}
+
+Obser.prototype.emit = function (key,...args) {
+  if(!this.event[key])return
+  this.event[key].forEach(item=>{
+    item.call(this,...args)
+  })
+}
+Obser.prototype.off = function (key,fn) {
+  if(!this.event[key])return
+  // 用find可能会好一点
+  // 实现的话filter比较快
+  this.event[key] = this.event[key].filter(i=>i!==fn)
+}
+
+// 执行后删除掉这个函数
+Obser.prototype.once = function (key,fn) {
+  this.on(key,newFn)
+
+  function newFn (...args) {
+    fn.call(this,...args)
+    this.off(key,newFn)
+  }
+}
+
+const event = new Obser()
+
+const handle = (...rest) => {
+  console.log(rest)
+}
+
+event.on("click", handle)
+
+event.emit("click", 1, 2, 3, 4)
+
+event.off("click", handle)
+
+event.emit("click", 1, 2)
+
+event.once("dbClick", () => {
+  console.log(123456)
+})
+event.emit("dbClick")
+event.emit("dbClick")

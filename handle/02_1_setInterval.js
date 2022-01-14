@@ -167,3 +167,19 @@ setTimeout(good.clear.bind(good),5051)  // 生效
 
 
 
+function test (fn,ms=300) {
+  let timer = null
+  function Interval () {
+    timer = setTimeout(()=>{
+      fn.call(this)
+      Interval()
+    },ms)
+  }
+  Interval()
+  return {
+    clean:()=>{
+      clearTimeout(timer)
+    }
+  }
+}
+
