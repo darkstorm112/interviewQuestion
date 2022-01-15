@@ -110,9 +110,29 @@
   // console.dir(b)
   console.log(b(1))
 
-  let a = {b:3}
-  const test = a?.b;
-  console.log(test)
+  // let a = {b:3}
+  // const test = a?.b;
+  // console.log(test)
+
+  function test (...args) {
+    console.log(args)
+  }
+
+  test()
+
+  function currying (fn,...args) {
+    console.log(arguments)
+    return function (...reset) {
+      return fn(...args,...reset)
+    }
+  }
+
+  const add = function(a, b, c) {
+    console.log(arguments.length)
+    console.log(a,b,c);
+  }
+  const a = currying(add);
+  console.log(a())
         
 
   </script>
