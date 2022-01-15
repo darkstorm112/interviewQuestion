@@ -31,3 +31,17 @@ function myInstanceof(left, right) {
     left = left.__proto__;
   }
 }
+
+
+// 用递归的方式写一写
+function ins (left,right) {
+  if(left) {
+    left = left.__proto__
+    if(left === right.prototype)return true
+    return ins(left,right)
+  }
+  return false
+}
+
+
+console.log(ins(Function,Function))
