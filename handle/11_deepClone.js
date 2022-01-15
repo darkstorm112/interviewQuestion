@@ -30,7 +30,7 @@ console.log(obj1)
 console.log(obj1.b===obj2.b)
 
 
-// 深拷贝（考虑到复制 Symbol 类型）
+// 深拷贝（考虑到复制 Symbol 类型）TODO  2022/01/15 没看懂
 // function isObject(val) {
 //   return typeof val === "object" && val !== null;
 // }
