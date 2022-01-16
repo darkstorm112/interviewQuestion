@@ -13,7 +13,7 @@ function myInstanceof (left, right) {
 
 let a = {b:3}
 
-console.log(myInstanceof(a,Object))
+// console.log(myInstanceof(a,Object))
 
 // 为啥node不支持这个写法===TODO版本太低了吗？
 // const test = a?.b;
@@ -44,4 +44,23 @@ function ins (left,right) {
 }
 
 
-console.log(ins(Function,Function))
+// console.log(ins(Function,Function))
+
+
+// test
+;function instance (left,right) {
+
+  while (left) {
+    left = left.__proto__
+    if(left===right.prototype)return true
+  }
+  return false
+}
+
+console.log(instance(Function,Function))
+console.log(instance(1,Number))
+console.log((1) instanceof Object)
+console.log(1 instanceof Number)
+
+
+

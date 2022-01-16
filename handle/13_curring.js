@@ -50,3 +50,36 @@ function currying (fn,...args) {
   return res
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// test
+function curring (fn,...args) {
+
+  return function newfn (...newargs) {
+    args = [...args,...newargs]
+    if(args.length===fn.length){
+      return fn(...args)
+    }else{
+      return newfn
+    }
+  }
+}
