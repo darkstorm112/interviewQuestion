@@ -45,6 +45,7 @@ function tree ( arr ) {
   function circle (arr, item)  {
     
     // arr为空
+    // 这一步也要抽出去
     if(!arr.length) {
       arr.push(item)
       return
@@ -61,6 +62,7 @@ function tree ( arr ) {
     }
 
     // 是否是父级
+    // 这一步要抽出去
     let child = arr.find(i=>i.pid===item.id)
     if(child) {
       let idx = arr.findIndex(i=>i.pid===item.id)
