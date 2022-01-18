@@ -39,3 +39,18 @@ function bubbleSort(arr) {
   return arr;
 }
 console.log(bubbleSort([3, 6, 2, 4, 1]));
+
+// 复习下冒泡
+function bubble (arr) {
+  let len = arr.length
+  for(let i=0; i<len-1; i++) {
+    for(let j=0; j<len-i; j++) {
+      if(arr[j]>arr[j+1]) {
+        [arr[j],arr[j+1]] = [arr[j+1],arr[j]]
+      }
+    }
+  }
+  return arr
+}
+console.log(bubble([3, 6, 2, 4, 1]))
+

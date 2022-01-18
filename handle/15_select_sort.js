@@ -76,3 +76,25 @@ function test (arr) {
 console.log(test(arr))
 
 console.log(test([3, 6, 2, 4, 1]));
+
+
+// 复习下选择排序
+function select (arr) {
+  let len = arr.length
+
+  for(let i=0;i<len-1;i++){
+    let min = i
+    for(let j=i+1;j<len;j++) {
+      if(arr[min]>arr[j]){
+        min = j
+      }
+    }
+    if(min!==i){
+      [arr[i],arr[min]] = [arr[min],arr[i]]
+    }
+  }
+  return arr
+}
+console.log(select(arr))
+
+console.log(select([3, 6, 2, 4, 1]));
