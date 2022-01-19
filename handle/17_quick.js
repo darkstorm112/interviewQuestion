@@ -41,7 +41,7 @@ function quickSort (arr) {
 // 忘记了
 
 
-// 好贱--取巧的写法
+// 好贱--取巧的写法 
 function quickSort(arr) {
   if (arr.length < 2) {
     return arr;
@@ -52,4 +52,16 @@ function quickSort(arr) {
   return [...quickSort(left), cur, ...quickSort(right)]
 }
 // console.log(quickSort([3, 6, 2, 4, 1]));
+
+
+// test
+function quic (arr) {
+  if(arr.length<2)return arr
+  let cur = arr[0]
+  let left = arr.filter((i,idx)=>i<=cur&&idx!==0)
+  let right = arr.filter(i=>i>cur)
+  return [...quic(left),cur,...quic(right)]
+}
+console.log('-----------',quic([3, 6, 2, 4, 1]))
+
 
