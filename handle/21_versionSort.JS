@@ -50,6 +50,8 @@ function vSort (arr){
     a = a.split('.')
     b = b.split('.')
     let i = 0
+
+    // 很危险哦，while true 这种写法，一定要注意不要弄出死循环来
     while (true) {
       if(a[i] === undefined || b[i] === undefined)return b.length - a.length
       i++
