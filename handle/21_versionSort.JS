@@ -52,8 +52,8 @@ function vSort (arr){
     let i = 0
     while (true) {
       if(a[i] === undefined || b[i] === undefined)return b.length - a.length
-      if(a[i] === b[i])continue
       i++
+      if(a[i-1] === b[i-1])continue
       return b[i-1] - a[i-1]
     }
   })
