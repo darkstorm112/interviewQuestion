@@ -66,11 +66,11 @@
   // setTimeout (()=>{
   // },2000)
 																			
-  let arr = [1,[2,[3,[4]]]]
-  let arr1 = [].concat(...arr)
-  let arr2 = [...arr1]
+  // let arr = [1,[2,[3,[4]]]]
+  // let arr1 = [].concat(...arr)
+  // let arr2 = [...arr1]
 
-  console.log(arr1,arr2)
+  // console.log(arr1,arr2)
 
   // let p = Promise.resolve(1)
   // let p2 = p.then(res=>res)
@@ -78,64 +78,77 @@
   // console.log(p2)
 
 
-  function fn1(x) {
-    return x + 1;
-  }
-  function fn2(x) {
-    return x + 2;
-  }
-  function fn3(x) {
-    return x + 3;
-  }
-  function fn4(x) {
-    return x + 4;
-  }
-  function newCompose (...fns) {
+  // function fn1(x) {
+  //   return x + 1;
+  // }
+  // function fn2(x) {
+  //   return x + 2;
+  // }
+  // function fn3(x) {
+  //   return x + 3;
+  // }
+  // function fn4(x) {
+  //   return x + 4;
+  // }
+  // function newCompose (...fns) {
 
-    return (value) =>{
-      let res = fns.reduce(
-        async (pro, cur)=>{
-          // console.log(pro)
-          return await pro.then(res=>{
-            // console.log(cur(res))
-            return cur(res)
-          })
-        }
-        ,Promise.resolve(value))
-      return res
-    }
-  }
+  //   return (value) =>{
+  //     let res = fns.reduce(
+  //       async (pro, cur)=>{
+  //         // console.log(pro)
+  //         return await pro.then(res=>{
+  //           // console.log(cur(res))
+  //           return cur(res)
+  //         })
+  //       }
+  //       ,Promise.resolve(value))
+  //     return res
+  //   }
+  // }
 
-  const b = newCompose(fn1, fn2, fn3, fn4);
-  // console.dir(b)
-  console.log(b(1))
+  // const b = newCompose(fn1, fn2, fn3, fn4);
+  // // console.dir(b)
+  // console.log(b(1))
 
   // let a = {b:3}
   // const test = a?.b;
   // console.log(test)
 
-  function test (...args) {
-    console.log(args)
-  }
+  // function test (...args) {
+  //   console.log(args)
+  // }
 
-  test()
+  // test()
 
-  function currying (fn,...args) {
-    console.log(arguments)
-    return function (...reset) {
-      return fn(...args,...reset)
-    }
-  }
+  // function currying (fn,...args) {
+  //   console.log(arguments)
+  //   return function (...reset) {
+  //     return fn(...args,...reset)
+  //   }
+  // }
 
-  const add = function(a, b, c) {
-    console.log(arguments.length)
-    console.log(a,b,c);
-  }
-  const a = currying(add);
-  console.log(a())
+  // const add = function(a, b, c) {
+  //   console.log(arguments.length)
+  //   console.log(a,b,c);
+  // }
+  // const a = currying(add);
+  // console.log(a())
         
 
   </script>
   <!-- <script src="./handle/07_debounce.js"></script> -->
+  <div id="test">
+    <span>
+      <a></a>
+    </span>
+    <span>
+      <a></a>
+      <a></a>
+    </span>
+  </div>
+  <script src="./handle/26_DOM2JSON.js"></script>
+  <script>
+    console.log(Dom2Json(document.getElementById('test')))
+  </script>
 </body>
 </html>
