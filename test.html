@@ -7,11 +7,12 @@
   <title>Document</title>
   <style>
     p{
-      height: 500px;
+      height: 40px;
     }
   </style>
 </head>
 <body>
+  <!-- <p >111</p>
   <p >111</p>
   <p >111</p>
   <p >111</p>
@@ -20,8 +21,8 @@
   <p >111</p>
   <p >111</p>
   <p >111</p>
-  <p >111</p>
-  <p >111</p>
+  <p >111</p> -->
+  <div id="container"></div>
   <script>
     // 定时器测试
     // let timer = setTimeout(console.log,2000,'测试')
@@ -146,9 +147,24 @@
       <a></a>
     </span>
   </div>
-  <script src="./handle/26_DOM2JSON.js"></script>
+  <!-- <script src="./handle/26_DOM2JSON.js"></script> -->
+  <!-- <script src="handle/30_burst.js"></script>
   <script>
-    console.log(Dom2Json(document.getElementById('test')))
+    let cont = document.getElementById('container')
+    let arr = []
+    for(let i=1;i<=10000;i++){
+      arr[i-1] = i
+    }
+    burst(cont,arr,(cont,arr)=>{
+      let div = document.createElement('div')
+      let str = ``
+      arr.forEach(item=>str += `<p>${item}</p>`)
+      div.innerHTML = str
+      cont.appendChild(div)
+    })
+  </script> -->
+  <script>
+    // console.log(Dom2Json(document.getElementById('test')))
   </script>
 </body>
 </html>
