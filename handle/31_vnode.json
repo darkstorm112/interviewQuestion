@@ -1,0 +1,21 @@
+{
+  "tag": "DIV",
+  "attrs":{
+  "id":"app"
+  },
+  "children": [
+    {
+      "tag": "SPAN",
+      "children": [
+        { "tag": "A", "children": [] }
+      ]
+    },
+    {
+      "tag": "SPAN",
+      "children": [
+        { "tag": "A", "children": [] },
+        { "tag": "A", "children": [] }
+      ]
+    }
+  ]
+}
