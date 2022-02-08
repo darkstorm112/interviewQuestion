@@ -30,3 +30,39 @@ function add(...args) {
   };
   return fn;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// test
+function test (...args) {
+
+  return ()=>{
+
+  }
+}
