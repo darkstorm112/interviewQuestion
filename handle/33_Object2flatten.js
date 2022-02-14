@@ -35,3 +35,22 @@ const obj = {
 
    return newObj
  }
+
+
+//  22/02/08
+ function flatten (obj,key='') {
+  var newObj = {}
+
+  Object.keys(obj).forEach(item=>{
+
+    // 对象和数组
+    if(typeof obj[item]==='object'&&obj[item]!==null){
+
+       
+    }else{
+       newObj[item] = obj[item]
+    }
+  })
+
+  return newObj
+}
